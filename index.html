@@ -1,15 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="lecteur">
 
 <head>
-    <title>Lecteur BD</title>
     <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+    <script src="angular.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="zip.js"></script>
+    <script src="js.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
-<body>
-    <input type="file" accept=".cbz">
-    <script type="text/javascript" src="zip.js"></script>
-    <script type="text/javascript" src="js.js"></script>
+<body ng-controller="BD">
+    <div id="lecteur">
+        <div ng-repeat="(iid, image) in images track by image.filename">
+            <img src="{{image.url}}" alt="{{image.filename}}" style="{{img.style}}">
+        </div>
+    </div>
+    <div id="controls" style="position: fixed;top:0;left: 0;background: white;">
+        <label>
+            <input type="checkbox" ng-model="img.height100" ng-true-value="'max-height:1wh;'" ng-false-value="">Hauteur limitée à 100%</label>
+        <br />
+        <span>Largeur :&nbsp;</span>
+        <select ng-model="img.widthType">
+            <option ng-repeat="(tkey, tval) in img.widthTypes" value="{{tkey}}">{{tval}}</option>
+            <option value="">libre</option>
+        </select>
+        <br />
+        <input type="number" ng-model="img.widthVal" ng-disabled="img.widthAuto" min="0" max="100" value="85">%&nbsp;
+        <button ng-click="img.widthVal = 100" ng-disabled="img.widthAuto">100%</button>
+        <br />
+        <label>
+            <input type="file" id="fichier" accept=".cbz">
+        </label>
+    </div>
 </body>
 
 </html>
